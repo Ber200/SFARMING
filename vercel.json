@@ -1,4 +1,6 @@
 {
+  "installCommand": "git clone https://github.com/flutter/flutter.git --depth 1 -b stable /opt/flutter",
+  "buildCommand": "/opt/flutter/bin/flutter pub get && /opt/flutter/bin/flutter build web -t lib/main_admin.dart --release --dart-define=GEMINI_API_KEY=$GEMINI_API_KEY",
   "outputDirectory": "build/web",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

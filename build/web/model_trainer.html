@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachable Machine Training Interface — Embedded</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f1117;
+            color: #e8eaed;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1d24;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            border-bottom: 1px solid #2a2d35;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            color: #b0b7c6;
+        }
+        .status-bar {
+            background: #0b0d12;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #7a8599;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #252a33;
+        }
+        .status-badge {
+            background: #1e3a2a;
+            color: #4caf50;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .panel {
+            background: #14171e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #252a33;
+        }
+        .panel h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #7a8599;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        .webcam-container {
+            aspect-ratio: 4/3;
+            background: #0b0d12;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #2a2d35;
+        }
+        .webcam-container video, .webcam-container canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .class-grid {
+            display: grid;
+            gap: 10px;
+        }
+        .class-item {
+            background: #0b0d12;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #252a33;
+            transition: all 0.2s;
+        }
+        .class-item.active {
+            border-color: #4caf50;
+            background: #1a2a1a;
+        }
+        .class-name {
+            font-weight: 500;
+            color: #d4d9e2;
+        }
+        .class-prob {
+            font-family: 'Courier New', monospace;
+            color: #4caf50;
+            font-weight: 600;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .btn {
+            background: #252a33;
+            border: none;
+            color: #e8eaed;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 100px;
+        }
+        .btn:hover {
+            background: #323842;
+            transform: translateY(-1px);
+        }
+        .btn-primary {
+            background: #2a6fdb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #3a7feb;
+        }
+        .btn-success {
+            background: #1e7a3a;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #2a8a4a;
+        }
+        .btn-danger {
+            background: #7a2a2a;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #8a3a3a;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .log-area {
+            background: #0b0d12;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #7a8599;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #252a33;
+            margin-top: 20px;
+        }
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px solid #14171e;
+        }
+        .log-entry .timestamp {
+            color: #4c5a6e;
+            margin-right: 12px;
+        }
+        .log-entry .level-info { color: #4caf50; }
+        .log-entry .level-warn { color: #ffa726; }
+        .log-entry .level-error { color: #ef5350; }
+        .model-meta {
+            background: #0b0d12;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #7a8599;
+            border: 1px solid #252a33;
+        }
+        .model-meta strong {
+            color: #d4d9e2;
+        }
+        .embed-note {
+            background: #1a1a2a;
+            border-left: 3px solid #ffa726;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #b0b7c6;
+        }
+        .embed-note code {
+            background: #0b0d12;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #ffa726;
+            font-size: 13px;
+        }
+        @media (max-width: 768px) {
+            .grid-2col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="embed-note">
+            ⚠️ Native Teachable Machine training UI cannot be iframed due to 
+            <code>X-Frame-Options: sameorigin</code>. This interface mirrors 
+            the same training workflow with embedded model loading.
+        </div>
+
+        <div class="status-bar">
+            <span>🔍 Training Interface — Embedded Mirror</span>
+            <span class="status-badge">● Live</span>
+        </div>
+
+        <h1>Teachable Machine · Training Workflow</h1>
+
+        <div class="grid-2col">
+            <div class="panel">
+                <h3>📷 Webcam Input</h3>
+                <div class="webcam-container" id="webcam-container">
+                    <canvas id="webcam-canvas"></canvas>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-start">▶ Start Webcam</button>
+                    <button class="btn btn-danger" id="btn-stop">⏹ Stop</button>
+                </div>
+                <div class="btn-group" style="margin-top: 6px;">
+                    <button class="btn btn-success" id="btn-capture">📸 Capture Sample</button>
+                    <button class="btn" id="btn-clear">🗑 Clear Samples</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>🏷️ Classes & Predictions</h3>
+                <div class="class-grid" id="class-grid">
+                    <div class="class-item" data-class="0">
+                        <span class="class-name">Class 1</span>
+                        <span class="class-prob">0.00%</span>
+                    </div>
+                    <div class="class-item" data-class="1">
+                        <span class="class-name">Class 2</span>
+                        <span class="class-prob">0.00%</span>
+                    </div>
+                    <div class="class-item" data-class="2">
+                        <span class="class-name">Class 3</span>
+                        <span class="class-prob">0.00%</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-train">🧠 Train Model</button>
+                    <button class="btn btn-success" id="btn-export">📦 Export</button>
+                </div>
+                <div class="model-meta" id="model-meta">
+                    <strong>Model Status:</strong> Not trained &nbsp;|&nbsp; 
+                    <strong>Samples:</strong> <span id="sample-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-bottom: 0;">
+            <h3>📋 Training Log</h3>
+            <div class="log-area" id="log-area">
+                <div class="log-entry">
+                    <span class="timestamp">[INIT]</span>
+                    <span class="level-info">Training interface initialized. Webcam ready.</span>
+                </div>
+                <div class="log-entry">
+                    <span class="timestamp">[INFO]</span>
+                    <span class="level-info">Model will use MobileNet feature extractor.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+
+    <script>
+        (function() {
+            'use strict';
+
+            let webcam = null;
+            let model = null;
+            let isRunning = false;
+            let samples = [];
+            let labels = [];
+            let trainingData = [];
+            let classNames = ['Class 1', 'Class 2', 'Class 3'];
+            let predictionLoop = null;
+
+            const logArea = document.getElementById('log-area');
+            const classGrid = document.getElementById('class-grid');
+            const sampleCount = document.getElementById('sample-count');
+            const modelMeta = document.getElementById('model-meta');
+            const canvas = document.getElementById('webcam-canvas');
+
+            function log(message, level = 'info') {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                const ts = new Date().toLocaleTimeString();
+                const levelClass = `level-${level}`;
+                entry.innerHTML = `<span class="timestamp">[${ts}]</span><span class="${levelClass}">${message}</span>`;
+                logArea.appendChild(entry);
+                logArea.scrollTop = logArea.scrollHeight;
+            }
+
+            function updateClassDisplay(predictions) {
+                const items = classGrid.querySelectorAll('.class-item');
+                items.forEach((item, idx) => {
+                    const prob = (predictions && predictions[idx]) ? predictions[idx].probability : 0;
+                    const probPercent = (prob * 100).toFixed(2);
+                    item.querySelector('.class-prob').textContent = `${probPercent}%`;
+                    if (prob > 0.5) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            function updateSampleCount() {
+                sampleCount.textContent = samples.length;
+                if (samples.length > 0) {
+                    modelMeta.innerHTML = `<strong>Model Status:</strong> ${samples.length} samples captured &nbsp;|&nbsp; <strong>Samples:</strong> ${samples.length}`;
+                }
+            }
+
+            async function startWebcam() {
+                try {
+                    if (!webcam) {
+                        webcam = new tmImage.Webcam(320, 240, true);
+                        await webcam.setup();
+                        webcam.canvas = canvas;
+                    }
+                    await webcam.play();
+                    isRunning = true;
+                    document.getElementById('btn-start').disabled = true;
+                    document.getElementById('btn-stop').disabled = false;
+                    document.getElementById('btn-capture').disabled = false;
+                    log('Webcam started successfully', 'info');
+
+                    // Start prediction loop
+                    if (predictionLoop) cancelAnimationFrame(predictionLoop);
+                    
+                    async function predictLoop() {
+                        if (!isRunning) return;
+                        webcam.update();
+                        if (model) {
+                            try {
+                                const preds = await model.predict(webcam.canvas);
+                                updateClassDisplay(preds);
+                            } catch(e) {
+                                // Model not ready
+                            }
+                        }
+                        predictionLoop = requestAnimationFrame(predictLoop);
+                    }
+                    predictLoop();
+
+                } catch(e) {
+                    log(`Webcam error: ${e.message}`, 'error');
+                }
+            }
+
+            function stopWebcam() {
+                if (webcam) {
+                    webcam.stop();
+                }
+                isRunning = false;
+                document.getElementById('btn-start').disabled = false;
+                document.getElementById('btn-stop').disabled = true;
+                document.getElementById('btn-capture').disabled = true;
+                if (predictionLoop) {
+                    cancelAnimationFrame(predictionLoop);
+                    predictionLoop = null;
+                }
+                log('Webcam stopped', 'warn');
+            }
+
+            function captureSample() {
+                if (!isRunning || !webcam) {
+                    log('Webcam must be running to capture samples', 'error');
+                    return;
+                }
+
+                const activeClass = prompt('Enter class index (0, 1, 2):', '0');
+                if (activeClass === null) return;
+                const classIdx = parseInt(activeClass);
+                if (isNaN(classIdx) || classIdx < 0 || classIdx > 2) {
+                    log('Invalid class index. Use 0, 1, or 2.', 'error');
+                    return;
+                }
+
+                const imageData = webcam.canvas.toDataURL('image/jpeg');
+                samples.push(imageData);
+                labels.push(classIdx);
+                trainingData.push({
+                    image: imageData,
+                    label: classIdx
+                });
+
+                updateSampleCount();
+                log(`Captured sample for ${classNames[classIdx]} (${samples.length} total)`, 'info');
+            }
+
+            function clearSamples() {
+                samples = [];
+                labels = [];
+                trainingData = [];
+                updateSampleCount();
+                model = null;
+                modelMeta.innerHTML = `<strong>Model Status:</strong> Not trained &nbsp;|&nbsp; <strong>Samples:</strong> 0`;
+                updateClassDisplay(null);
+                log('All samples cleared', 'warn');
+            }
+
+            async function trainModel() {
+                if (samples.length < 3) {
+                    log('Need at least 3 samples to train (prefer 5+ per class)', 'error');
+                    return;
+                }
+
+                log('🧠 Training model... this may take a moment', 'info');
+
+                try {
+                    const modelURL = null; // We'll train from scratch
+                    const metadataURL = null;
+
+                    // Load MobileNet feature extractor
+                    const mobilenet = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_1.0_224/model.json');
+                    
+                    // Prepare training data
+                    const imageElements = [];
+                    for (let i = 0; i < trainingData.length; i++) {
+                        const img = new Image();
+                        img.src = trainingData[i].image;
+                        await new Promise((resolve) => {
+                            img.onload = resolve;
+                            img.onerror = resolve;
+                        });
+                        imageElements.push(img);
+                    }
+
+                    // Extract features
+                    const features = [];
+                    const labelIndices = [];
+                    
+                    for (let i = 0; i < imageElements.length; i++) {
+                        const img = tf.browser.fromPixels(imageElements[i])
+                            .resizeBilinear([224, 224])
+                            .toFloat()
+                            .expandDims(0);
+                        
+                        // Preprocess for MobileNet
+                        const preprocessed = img.div(127.5).sub(1);
+                        const feature = mobilenet.predict(preprocessed);
+                        features.push(feature);
+                        labelIndices.push(trainingData[i].label);
+                    }
+
+                    // Build classifier on top of features
+                    const numClasses = 3;
+                    const featureSize = features[0].shape[1];
+                    
+                    const input = tf.input({shape: [featureSize]});
+                    const dense1 = tf.layers.dense({units: 128, activation: 'relu'}).apply(input);
+                    const dropout = tf.layers.dropout({rate: 0.3}).apply(dense1);
+                    const output = tf.layers.dense({units: numClasses, activation: 'softmax'}).apply(dropout);
+                    
+                    const classifier = tf.model({inputs: input, outputs: output});
+                    
+                    // Prepare labels as one-hot
+                    const labelTensor = tf.tensor1d(labelIndices, 'int32');
+                    const oneHot = tf.oneHot(labelTensor, numClasses);
+
+                    // Concatenate features
+                    const featureConcat = tf.concat(features, 0);
+                    
+                    classifier.compile({
+                        optimizer: tf.train.adam(0.001),
+                        loss: 'categoricalCrossentropy',
+                        metrics: ['accuracy']
+                    });
+
+                    await classifier.fit(featureConcat, oneHot, {
+                        epochs: 50,
+                        batchSize: Math.min(16, features.length),
+                        shuffle: true,
+                        callbacks: {
+                            onEpochEnd: (epoch, logs) => {
+                                if (epoch % 10 === 0) {
+                                    log(`Epoch ${epoch}: loss=${logs.loss.toFixed(4)}, acc=${logs.acc.toFixed(4)}`, 'info');
+                                }
+                            }
+                        }
+                    });
+
+                    // Save model reference
+                    model = {
+                        predict: async (imageElement) => {
+                            const img = tf.browser.fromPixels(imageElement)
+                                .resizeBilinear([224, 224])
+                                .toFloat()
+                                .expandDims(0);
+                            const preprocessed = img.div(127.5).sub(1);
+                            const feature = mobilenet.predict(preprocessed);
+                            const predictions = classifier.predict(feature);
+                            const data = await predictions.data();
+                            
+                            const result = [];
+                            for (let i = 0; i < numClasses; i++) {
+                                result.push({
+                                    className: classNames[i],
+                                    probability: data[i]
+                                });
+                            }
+                            return result;
+                        },
+                        getTotalClasses: () => numClasses
+                    };
+
+                    modelMeta.innerHTML = `<strong>Model Status:</strong> ✅ Trained (${samples.length} samples) &nbsp;|&nbsp; <strong>Accuracy:</strong> ${((await evaluateModel(classifier, featureConcat, oneHot)) * 100).toFixed(1)}%`;
+                    log('✅ Model training complete! Ready for predictions.', 'info');
+                    
+                } catch(e) {
+                    log(`Training error: ${e.message}`, 'error');
+                    console.error(e);
+                }
+            }
+
+            async function evaluateModel(classifier, features, labels) {
+                const preds = classifier.predict(features);
+                const predData = await preds.data();
+                const labelData = await labels.data();
+                
+                let correct = 0;
+                for (let i = 0; i < labelData.length; i++) {
+                    let maxProb = -1;
+                    let maxIdx = 0;
+                    for (let j = 0; j < 3; j++) {
+                        const prob = predData[i * 3 + j];
+                        if (prob > maxProb) {
+                            maxProb = prob;
+                            maxIdx = j;
+                        }
+                    }
+                    if (maxIdx === labelData[i]) correct++;
+                }
+                return correct / labelData.length;
+            }
+
+            function exportModel() {
+                if (!model) {
+                    log('Train the model first before exporting', 'error');
+                    return;
+                }
+                log('📦 Export ready — model weights can be saved as JSON.', 'info');
+                alert('Model is ready for export.\nIn production, use teachablemachine.withgoogle.com/export for full format.\nCurrent session model is active in memory.');
+            }
+
+            // Initialize
+            document.getElementById('btn-start').addEventListener('click', startWebcam);
+            document.getElementById('btn-stop').addEventListener('click', stopWebcam);
+            document.getElementById('btn-capture').addEventListener('click', captureSample);
+            document.getElementById('btn-clear').addEventListener('click', clearSamples);
+            document.getElementById('btn-train').addEventListener('click', trainModel);
+            document.getElementById('btn-export').addEventListener('click', exportModel);
+
+            // Set canvas default
+            const ctx = canvas.getContext('2d');
+            canvas.width = 320;
+            canvas.height = 240;
+            ctx.fillStyle = '#0b0d12';
+            ctx.fillRect(0, 0, 320, 240);
+            ctx.fillStyle = '#2a2d35';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Webcam Off', 160, 120);
+
+            log('Training interface ready — mirror of Teachable Machine workflow', 'info');
+            log('X-Frame-Options prevents iframe embedding; this is the embedded alternative.', 'warn');
+        })();
+    </script>
+</body>
+</html>

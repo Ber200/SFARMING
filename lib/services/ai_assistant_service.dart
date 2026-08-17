@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../config/gemini_config.dart';
@@ -26,6 +27,9 @@ class AiAssistantService {
     int? maxOutputTokens,
   }) async {
     if (!GeminiConfig.hasApiKey) {
+      // Safe diagnostic — no key content is logged.
+      debugPrint('[AiAssistantService] GEMINI_API_KEY not compiled in. '
+          'Rebuild with --dart-define=GEMINI_API_KEY=YOUR_KEY');
       throw AiAssistantException('no_key');
     }
 
@@ -62,6 +66,7 @@ class AiAssistantService {
     };
 
     final uri = GeminiConfig.generateContentUri();
+    debugPrint('[AiAssistantService] Sending request → ${uri.host}${uri.path}');
 
     late http.Response response;
     try {
@@ -76,23 +81,44 @@ class AiAssistantService {
           )
           .timeout(GeminiConfig.timeout);
     } on TimeoutException {
+      debugPrint(
+          '[AiAssistantService] Request timed out after ${GeminiConfig.timeout.inSeconds}s');
       throw AiAssistantException('timeout');
-    } catch (_) {
+    } catch (e) {
+      // On Flutter Web, CORS/network failures surface as generic exceptions.
+      // generativelanguage.googleapis.com supports browser CORS, so this
+      // typically indicates a network connectivity issue.
+      debugPrint('[AiAssistantService] Network error: ${e.runtimeType}');
       throw AiAssistantException('network');
     }
 
+    debugPrint('[AiAssistantService] Gemini HTTP status: ${response.statusCode}');
+
+    if (response.statusCode == 400) {
+      debugPrint('[AiAssistantService] Bad request (400) — check request body format.');
+      throw AiAssistantException('api_error',
+          statusCode: 400, body: response.body);
+    }
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      debugPrint('[AiAssistantService] Auth error (${response.statusCode}) — '
+          'API key may be invalid, expired, or restricted.');
+      throw AiAssistantException('api_error',
+          statusCode: response.statusCode, body: response.body);
+    }
     if (response.statusCode == 429) {
+      debugPrint('[AiAssistantService] Rate limited (429) — quota exceeded.');
       throw AiAssistantException('rate_limited');
     }
     if (response.statusCode >= 500) {
+      debugPrint(
+          '[AiAssistantService] Gemini server error (${response.statusCode}).');
       throw AiAssistantException('server_error');
     }
     if (response.statusCode != 200) {
-      throw AiAssistantException(
-        'api_error',
-        statusCode: response.statusCode,
-        body: response.body,
-      );
+      debugPrint(
+          '[AiAssistantService] Unexpected status: ${response.statusCode}');
+      throw AiAssistantException('api_error',
+          statusCode: response.statusCode, body: response.body);
     }
 
     try {
@@ -100,15 +126,16 @@ class AiAssistantService {
       final candidates = decoded['candidates'] as List? ?? [];
       final text = _extractText(candidates);
       if (text == null || text.trim().isEmpty) {
+        debugPrint('[AiAssistantService] Empty response — '
+            'possible safety filter or empty candidates list.');
         throw AiAssistantException('empty_response');
       }
+      debugPrint('[AiAssistantService] Response received successfully.');
       return text.trim();
     } catch (e) {
-      throw AiAssistantException(
-        'parse_error',
-        statusCode: response.statusCode,
-        body: response.body,
-      );
+      if (e is AiAssistantException) rethrow;
+      throw AiAssistantException('parse_error',
+          statusCode: response.statusCode, body: response.body);
     }
   }
 
@@ -128,7 +155,17 @@ class AiAssistantService {
 }
 
 /// Typed error surfaced by [AiAssistantService]. [code] is a stable machine
-/// key the provider maps to a localized message.
+/// key that providers map to localized messages.
+///
+/// Codes:
+/// - `no_key`       — GEMINI_API_KEY not compiled into the binary.
+/// - `timeout`      — request exceeded [GeminiConfig.timeout].
+/// - `network`      — network/CORS error before a response was received.
+/// - `rate_limited` — HTTP 429, quota exceeded.
+/// - `server_error` — HTTP 5xx from Gemini.
+/// - `api_error`    — any other non-200 response (check [statusCode]).
+/// - `empty_response` — model returned no text (safety filter etc.).
+/// - `parse_error`  — response body could not be decoded.
 class AiAssistantException implements Exception {
   final String code;
   final int? statusCode;
@@ -137,5 +174,5 @@ class AiAssistantException implements Exception {
   AiAssistantException(this.code, {this.statusCode, this.body});
 
   @override
-  String toString() => 'AiAssistantException($code)';
+  String toString() => 'AiAssistantException($code, statusCode: $statusCode)';
 }

@@ -27,8 +27,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-!build/web/
-!build/web/**
 
 # Symbolication & Obfuscation
 app.*.symbols

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMARTFARMING - Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Splash -->
+    <section id="screen-splash" class="screen active">
+      <div class="splash-container">
+        <div class="splash-content">
+          <span class="material-symbols-outlined splash-icon">admin_panel_settings</span>
+          <h1 class="splash-title">SMARTFARMING</h1>
+          <p class="splash-subtitle">Admin Dashboard</p>
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Login -->
+    <section id="screen-admin-login" class="screen">
+      <div class="login-bg"></div>
+      <div class="login-overlay"></div>
+      <div class="login-center">
+        <div class="login-card">
+          <span class="material-symbols-outlined login-card-icon">admin_panel_settings</span>
+          <h2 class="login-title">Admin Login</h2>
+          <p class="login-subtitle">SMARTFARMING Dashboard</p>
+          <form id="form-login" class="login-form">
+            <div class="input-group">
+              <label>Email</label>
+              <span class="input-wrap">
+                <span class="material-symbols-outlined input-prefix">mail</span>
+                <input type="email" id="login-email" placeholder="Admin email" required>
+              </span>
+              <span id="login-email-error" class="error-msg"></span>
+            </div>
+            <div class="input-group">
+              <label>Password</label>
+              <span class="input-wrap">
+                <span class="material-symbols-outlined input-prefix">lock</span>
+                <input type="password" id="login-password" placeholder="Admin password" required>
+                <button type="button" class="btn-icon toggle-pwd" aria-label="Toggle password">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
+              </span>
+              <span id="login-password-error" class="error-msg"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="btn-login">
+              Sign In
+            </button>
+          </form>
+        </div>
+      </div>
+      <div id="snackbar" class="snackbar" aria-live="polite"></div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="screen-admin-dashboard" class="screen">
+      <header class="app-bar">
+        <h1 class="app-bar-title">Admin Dashboard</h1>
+        <div class="app-bar-actions">
+          <button type="button" class="btn-icon" title="Profile" data-nav="admin-profile">
+            <span class="material-symbols-outlined">person</span>
+          </button>
+          <button type="button" class="btn-icon" title="Logout" id="btn-logout">
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      </header>
+      <div class="dashboard-bg"></div>
+      <div class="dashboard-overlay"></div>
+      <main class="dashboard-main">
+        <p class="dashboard-welcome">Welcome, <span id="dashboard-username">Admin</span>!</p>
+        <div class="quick-actions">
+          <button type="button" class="quick-action-card" data-nav="farmer-management">
+            <span class="material-symbols-outlined quick-action-icon blue">people</span>
+            <span>Farmers</span>
+          </button>
+          <button type="button" class="quick-action-card" data-nav="detection-records">
+            <span class="material-symbols-outlined quick-action-icon green">camera_alt</span>
+            <span>Detections</span>
+          </button>
+          <button type="button" class="quick-action-card" data-nav="admin-calendar">
+            <span class="material-symbols-outlined quick-action-icon orange">calendar_today</span>
+            <span>Calendar</span>
+          </button>
+          <button type="button" class="quick-action-card" data-nav="admin-soil-weather">
+            <span class="material-symbols-outlined quick-action-icon teal">thermostat</span>
+            <span>Soil & Weather</span>
+          </button>
+          <button type="button" class="quick-action-card" data-nav="model-trainer">
+            <span class="material-symbols-outlined quick-action-icon" style="color:#9C27B0">psychology</span>
+            <span>Model Trainer</span>
+          </button>
+        </div>
+        <div class="stats-row">
+          <div class="dashboard-card">
+            <h3 class="dashboard-card-title">Total Detections</h3>
+            <p class="dashboard-card-value" id="stat-detections">0</p>
+          </div>
+          <div class="dashboard-card">
+            <h3 class="dashboard-card-title">Active Treatments</h3>
+            <p class="dashboard-card-value" id="stat-treatments">0</p>
+          </div>
+        </div>
+        <div class="dashboard-card full-width">
+          <h3 class="dashboard-card-title">Disease Distribution</h3>
+          <div id="disease-distribution" class="disease-list"></div>
+        </div>
+      </main>
+    </section>
+
+    <!-- Farmer Management -->
+    <section id="screen-farmer-management" class="screen">
+      <header class="app-bar">
+        <button type="button" class="btn-icon back" data-nav="admin-dashboard" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="app-bar-title">Farmer Management</h1>
+        <button type="button" class="btn-icon" title="Add Farmer" id="btn-add-farmer">
+          <span class="material-symbols-outlined">add</span>
+        </button>
+      </header>
+      <main class="panel-body">
+        <div id="farmer-list" class="list-container"></div>
+        <div id="farmer-empty" class="empty-state hidden">
+          <span class="material-symbols-outlined empty-icon">people_outline</span>
+          <p>No farmers registered yet</p>
+          <button type="button" class="btn btn-primary" id="btn-add-farmer-empty">Add Farmer</button>
+        </div>
+      </main>
+    </section>
+
+    <!-- Detection Records -->
+    <section id="screen-detection-records" class="screen">
+      <header class="app-bar">
+        <button type="button" class="btn-icon back" data-nav="admin-dashboard" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="app-bar-title">Detection Records</h1>
+      </header>
+      <main class="panel-body">
+        <div id="detection-list" class="list-container"></div>
+        <div id="detection-empty" class="empty-state">
+          <span class="material-symbols-outlined empty-icon">camera_alt</span>
+          <p>No detection records</p>
+        </div>
+      </main>
+    </section>
+
+    <!-- Model Trainer -->
+    <section id="screen-model-trainer" class="screen">
+      <header class="app-bar">
+        <button type="button" class="btn-icon back" data-nav="admin-dashboard" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="app-bar-title">Model Trainer</h1>
+      </header>
+      <main class="panel-body scroll" style="padding: 0; height: calc(100vh - 64px); overflow: hidden;">
+        <iframe src="../web/model_trainer.html" style="width:100%; height:100%; border:none;" title="Model Trainer Window"></iframe>
+      </main>
+    </section>
+
+    <!-- Admin Profile -->
+    <section id="screen-admin-profile" class="screen">
+      <header class="app-bar">
+        <button type="button" class="btn-icon back" data-nav="admin-dashboard" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="app-bar-title">Admin Profile</h1>
+      </header>
+      <main class="panel-body scroll">
+        <div class="profile-avatar">
+          <span class="material-symbols-outlined profile-avatar-icon">admin_panel_settings</span>
+          <span class="profile-avatar-badge material-symbols-outlined">add</span>
+        </div>
+        <h2 class="profile-name" id="profile-name">Admin</h2>
+        <p class="profile-email" id="profile-email"></p>
+        <span class="profile-badge">ADMIN</span>
+        <div class="profile-cards">
+          <button type="button" class="profile-card">
+            <span class="profile-card-icon material-symbols-outlined">edit</span>
+            <div class="profile-card-text">
+              <span class="profile-card-title">Edit Profile</span>
+              <span class="profile-card-subtitle">Update your personal information</span>
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+          <button type="button" class="profile-card">
+            <span class="profile-card-icon material-symbols-outlined">settings</span>
+            <div class="profile-card-text">
+              <span class="profile-card-title">Settings</span>
+              <span class="profile-card-subtitle">App preferences and notifications</span>
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+          <button type="button" class="profile-card">
+            <span class="profile-card-icon material-symbols-outlined">analytics</span>
+            <div class="profile-card-text">
+              <span class="profile-card-title">Analytics</span>
+              <span class="profile-card-subtitle">View system statistics and reports</span>
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+        </div>
+        <button type="button" class="btn btn-danger btn-block" id="btn-profile-logout">
+          <span class="material-symbols-outlined btn-icon-left">logout</span>
+          Logout
+        </button>
+      </main>
+    </section>
+
+    <!-- Admin Calendar -->
+    <section id="screen-admin-calendar" class="screen">
+      <header class="app-bar">
+        <button type="button" class="btn-icon back" data-nav="admin-dashboard" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="app-bar-title">Treatment Calendar</h1>
+      </header>
+      <main class="calendar-body">
+        <div class="calendar-filters card">
+          <select id="filter-status" class="dropdown">
+            <option value="">All (Status)</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <select id="filter-type" class="dropdown">
+            <option value="">All (Type)</option>
+            <option value="treatment">Treatment</option>
+            <option value="fertilization">Fertilization</option>
+          </select>
+        </div>
+        <div class="calendar-view-toggle">
+          <button type="button" class="view-btn active" data-format="month">Month</button>
+          <button type="button" class="view-btn" data-format="twoWeeks">Week</button>
+          <button type="button" class="view-btn" data-format="week">Day</button>
+        </div>
+        <div id="calendar-grid" class="calendar-grid"></div>
+        <div class="calendar-selected-label">Treatments for <span id="selected-date-label"></span></div>
+        <div id="calendar-treatments" class="calendar-treatments"></div>
+      </main>
+    </section>
+
+    <!-- Admin Soil & Weather -->
+    <section id="screen-admin-soil-weather" class="screen">
+      <header class="app-bar">
+        <button type="button" class="btn-icon back" data-nav="admin-dashboard" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="app-bar-title">Soil & Weather</h1>
+        <button type="button" class="btn-icon" title="Refresh" id="btn-soil-refresh">
+          <span class="material-symbols-outlined">refresh</span>
+        </button>
+      </header>
+      <main class="panel-body scroll">
+        <div id="weather-card" class="card weather-card">
+          <span class="material-symbols-outlined weather-card-icon">cloud</span>
+          <h3 class="card-title">Weather - Panabo City</h3>
+          <div id="weather-content" class="weather-chips"></div>
+        </div>
+        <h3 class="section-title">Farmer Soil Data (Humidity & pH)</h3>
+        <div id="soil-cards"></div>
+      </main>
+    </section>
+  </div>
+
+  <!-- Modals (dialogs) -->
+  <div id="modal-overlay" class="modal-overlay hidden" aria-hidden="true">
+    <div id="modal-container" class="modal-container">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

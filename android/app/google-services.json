@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "550642869405",
+    "firebase_url": "https://sfarming-5eb0e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "sfarming-5eb0e",
+    "storage_bucket": "sfarming-5eb0e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550642869405:android:1a8beaf0b1e4f9adc16074",
+        "android_client_info": {
+          "package_name": "com.smartfarming.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550642869405-h09kn3j6no7icn5e3u1cko9joseq07he.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRXJymIODOWSCQrnwMbinmq1u2ImBrfQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550642869405-h09kn3j6no7icn5e3u1cko9joseq07he.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

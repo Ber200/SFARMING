@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- =================================================================== -->
+    <!-- LEFT COLUMN: EXTERNAL ENTITIES                                      -->
+    <!-- =================================================================== -->
+    
+    <!-- Farmer Entity (Top Left) -->
+    <mxCell id="ent_farmer" value="Farmer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;strokeWidth=2;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="60" y="60" width="180" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- Admin Entity 1 (Middle Left) -->
+    <mxCell id="ent_admin1" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;strokeWidth=2;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="60" y="440" width="180" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- Admin Entity 2 (Bottom Left) -->
+    <mxCell id="ent_admin2" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;strokeWidth=2;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="60" y="780" width="180" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- =================================================================== -->
+    <!-- MIDDLE COLUMN: PROCESSES (1.0 - 6.0)                                -->
+    <!-- =================================================================== -->
+
+    <!-- Process 1.0 -->
+    <mxCell id="p1_box" value="1.0&#xa;Authenticate and&#xa;Register Farmer" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=1.5;fontSize=13;align=center;" vertex="1" parent="1">
+      <mxGeometry x="460" y="30" width="240" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Process 2.0 -->
+    <mxCell id="p2_box" value="2.0&#xa;Provide Detection and&#xa;Recommendations" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=1.5;fontSize=13;align=center;" vertex="1" parent="1">
+      <mxGeometry x="460" y="180" width="240" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Process 3.0 -->
+    <mxCell id="p3_box" value="3.0&#xa;Provide Weather&#xa;Information and Reports" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=1.5;fontSize=13;align=center;" vertex="1" parent="1">
+      <mxGeometry x="460" y="330" width="240" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Process 4.0 -->
+    <mxCell id="p4_box" value="4.0&#xa;Admin Authentication&#xa;and Account Management" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=1.5;fontSize=13;align=center;" vertex="1" parent="1">
+      <mxGeometry x="460" y="470" width="240" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Process 5.0 -->
+    <mxCell id="p5_box" value="5.0&#xa;Manage Farmer and Soil/&#xa;Weather Monitoring Data" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=1.5;fontSize=13;align=center;" vertex="1" parent="1">
+      <mxGeometry x="460" y="630" width="240" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Process 6.0 -->
+    <mxCell id="p6_box" value="6.0&#xa;Generate Summary&#xa;Reports" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=1.5;fontSize=13;align=center;" vertex="1" parent="1">
+      <mxGeometry x="460" y="780" width="240" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Inter-Process Vertical Connector Lines -->
+    <mxCell id="p1_to_p2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;strokeWidth=1;" edge="1" parent="1" source="p1_box" target="p2_box">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_to_p3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;strokeWidth=1;" edge="1" parent="1" source="p2_box" target="p3_box">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_to_p4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;strokeWidth=1;" edge="1" parent="1" source="p3_box" target="p4_box">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="p4_to_p5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;strokeWidth=1;" edge="1" parent="1" source="p4_box" target="p5_box">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="p5_to_p6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;strokeWidth=1;" edge="1" parent="1" source="p5_box" target="p6_box">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- =================================================================== -->
+    <!-- RIGHT COLUMN: SMARTFARMING SYSTEM & LOGOUT                           -->
+    <!-- =================================================================== -->
+
+    <!-- System Container Box -->
+    <mxCell id="sys_box" value="SmartFarming&#xa;System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;strokeWidth=2;fontSize=18;fontStyle=1;align=center;verticalAlign=top;spacingTop=40;" vertex="1" parent="1">
+      <mxGeometry x="960" y="30" width="180" height="880" as="geometry" />
+    </mxCell>
+
+    <!-- Logout Action Box Inside System Container -->
+    <mxCell id="logout_box" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;strokeWidth=1.5;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="990" y="850" width="120" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- =================================================================== -->
+    <!-- DATA FLOW EDGES (PROCESS TO SYSTEM)                                 -->
+    <!-- =================================================================== -->
+
+    <mxCell id="p1_to_sys" value="Submit Login Status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p1_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="65" />
+          <mxPoint x="960" y="65" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p2_to_sys" value="Check Login &amp; Registration" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p2_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="215" />
+          <mxPoint x="960" y="215" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p3_to_sys" value="Analyze &amp; Analyze Metrics" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p3_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="365" />
+          <mxPoint x="960" y="365" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p4_to_sys" value="Verify Login Information" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p4_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="505" />
+          <mxPoint x="960" y="505" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p5_to_sys" value="Store &amp; Analyze Farmer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p5_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="665" />
+          <mxPoint x="960" y="665" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p6_to_sys_reports" value="Summary Reports" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p6_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="800" />
+          <mxPoint x="960" y="800" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p6_to_sys_data" value="Detection Records,&#xa;Soil &amp; Weather Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p6_box" target="sys_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="700" y="830" />
+          <mxPoint x="960" y="830" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- =================================================================== -->
+    <!-- DATA FLOW EDGES (FARMER TO PROCESSES)                              -->
+    <!-- =================================================================== -->
+
+    <mxCell id="farmer_to_p1_creds" value="Login Credentials" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p1_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="80" />
+          <mxPoint x="460" y="80" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="farmer_to_p1_reg" value="Registration Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p1_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="105" />
+          <mxPoint x="460" y="105" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="farmer_to_p2_img" value="Leaf Image (Camera/Gallery)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p2_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="180" y="150" />
+          <mxPoint x="180" y="185" />
+          <mxPoint x="460" y="185" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="farmer_to_p2_sched" value="Treatment Schedule Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p2_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="160" y="150" />
+          <mxPoint x="160" y="205" />
+          <mxPoint x="460" y="205" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="farmer_to_p2_soil" value="Soil Data (pH, Moisture)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p2_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="140" y="150" />
+          <mxPoint x="140" y="225" />
+          <mxPoint x="460" y="225" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="farmer_to_p2_prof" value="Profile Updates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p2_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="120" y="150" />
+          <mxPoint x="120" y="240" />
+          <mxPoint x="460" y="240" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="farmer_to_p3_analysis" value="Send Image for Analysis" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_farmer" target="p3_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="100" y="150" />
+          <mxPoint x="100" y="340" />
+          <mxPoint x="460" y="340" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p3_to_farmer_wx" value="Weather Information" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p3_box" target="ent_farmer">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="460" y="360" />
+          <mxPoint x="200" y="360" />
+          <mxPoint x="200" y="150" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p3_to_farmer_reports" value="Reports &amp; Charts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p3_box" target="ent_farmer">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="460" y="380" />
+          <mxPoint x="220" y="380" />
+          <mxPoint x="220" y="150" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p3_to_farmer_sched" value="Updated Schedule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p3_box" target="ent_farmer">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="460" y="395" />
+          <mxPoint x="240" y="395" />
+          <mxPoint x="240" y="150" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- =================================================================== -->
+    <!-- DATA FLOW EDGES (ADMIN TO PROCESSES)                                -->
+    <!-- =================================================================== -->
+
+    <mxCell id="admin1_to_p4_map" value="Track Map Location" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#2e7d32;strokeWidth=2;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p4_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="460" />
+          <mxPoint x="460" y="460" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p4_creds" value="Login Credentials" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p4_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="480" />
+          <mxPoint x="460" y="480" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p4_acct" value="Farmer Account Updates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p4_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="500" />
+          <mxPoint x="460" y="500" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p4_cal" value="Calendar Updates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p4_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="520" />
+          <mxPoint x="460" y="520" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p4_logout" value="Logout or Exit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p4_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="440" />
+          <mxPoint x="460" y="440" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p4_to_p5_verify" value="Verify &amp; Approve Farmer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p4_box" target="p5_box">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="admin1_to_p5_login" value="Login Information" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p5_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="180" y="540" />
+          <mxPoint x="180" y="640" />
+          <mxPoint x="460" y="640" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p5_confirm" value="Account Confirmation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p5_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="160" y="540" />
+          <mxPoint x="160" y="660" />
+          <mxPoint x="460" y="660" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p5_info" value="Farmer Information" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p5_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="140" y="540" />
+          <mxPoint x="140" y="680" />
+          <mxPoint x="460" y="680" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p5_wx" value="Weather Monitoring Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p5_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="120" y="540" />
+          <mxPoint x="120" y="695" />
+          <mxPoint x="460" y="695" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="admin1_to_p5_map" value="View Map Location" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#2e7d32;strokeWidth=2;fontSize=11;" edge="1" parent="1" source="ent_admin1" target="p5_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="100" y="540" />
+          <mxPoint x="100" y="710" />
+          <mxPoint x="460" y="710" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Admin Bottom Flows (Admin 2 to Process 6.0) -->
+    <mxCell id="admin2_to_p6_login" value="Admin Login Credentials" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="ent_admin2" target="p6_box">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="240" y="800" />
+          <mxPoint x="460" y="800" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="p6_to_admin2_reports" value="Receive Summary Reports" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#333333;fontSize=11;" edge="1" parent="1" source="p6_box" target="ent_admin2">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="460" y="820" />
+          <mxPoint x="240" y="820" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- =================================================================== -->
+    <!-- LEGEND AT BOTTOM                                                    -->
+    <!-- =================================================================== -->
+
+    <mxCell id="leg_title" value="Legend:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="930" width="80" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="leg_ext" value="External Entity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;strokeWidth=1.5;fontSize=11;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="150" y="930" width="110" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="leg_proc" value="Process" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=15;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;fontSize=11;align=center;" vertex="1" parent="1">
+      <mxGeometry x="290" y="930" width="110" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- Data Flow Legend Arrow -->
+    <mxCell id="leg_df_line" value="" style="endArrow=classic;html=1;strokeColor=#333333;strokeWidth=1.5;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="430" y="945" as="sourcePoint" />
+        <mxPoint x="480" y="945" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="leg_df_lbl" value="Data Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="490" y="930" width="80" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- Map Location Flow Legend Arrow -->
+    <mxCell id="leg_map_line" value="" style="endArrow=classic;html=1;strokeColor=#2e7d32;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="590" y="945" as="sourcePoint" />
+        <mxPoint x="640" y="945" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="leg_map_lbl" value="Map Location Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="650" y="930" width="130" height="30" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>
